@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval Application</title>
+    <style>
+        /* Base and reset styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 20px 40px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+
+        .navbar .logo {
+            color: #4a90e2;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .navbar a {
+            color: #333;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: #4a90e2;
+        }
+
+        /* Hero section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background-image: url('https://img.freepik.com/free-vector/bank-loan-concept-illustration_114360-16751.jpg?ga=GA1.1.915130604.1731674604&semt=ais_hybrid'); /* Loan background */
+            background-size: cover;
+            background-position: center;
+            padding: 120px 20px;
+            height: 100vh;
+            box-shadow: inset 0 0 0 1000px rgba(0, 0, 0, 0.4); /* Dark overlay for text readability */
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: #ffffff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: #ffffff;
+            max-width: 700px;
+            margin: 10px auto;
+            line-height: 1.6;
+        }
+
+        .hero .btn {
+            margin-top: 20px;
+            background-color: #4a90e2;
+            color: #ffffff;
+            padding: 15px 40px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .hero .btn:hover {
+            background-color: #357ab7;
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        section {
+            padding: 60px 20px;
+            margin: 20px 0;
+            max-width: 800px;
+            width: 90%;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            background-color: #ffffff;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 32px;
+            color: #4a90e2;
+            margin-bottom: 20px;
+        }
+
+        section p,
+        section li {
+            font-size: 18px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        section li {
+            margin: 10px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #f4f4f9;
+            padding: 20px;
+            text-align: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        /* Social Media Icons */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            margin: 0 15px;
+            font-size: 24px;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #4a90e2;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
+            }
+
+            .navbar {
+                flex-direction: column;
+            }
+
+            .navbar a {
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">Loan Tracker</div>
+        <div>
+            <a href="#about">About</a>
+            <a href="#features">Features</a>
+            <a href="#testimonials">Testimonials</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Loan Approval Application</h1>
+        <p>Get instant loan approval predictions with our easy-to-use application.</p>
+        <a href="{{ url_for('predict_datapoint') }}" class="btn">Get Started</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2>About Our Tool</h2>
+        <p>Our loan approval prediction tool allows you to quickly assess your eligibility for a loan based on various financial factors.</p>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features">
+        <h2>Features</h2>
+        <ul>
+            <li>Instant loan approval prediction</li>
+            <li>User-friendly interface</li>
+            <li>Track loan status and eligibility</li>
+            <li>Secure and private data handling</li>
+        </ul>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <h2>Testimonials</h2>
+        <blockquote>"This tool made loan application so easy and fast!" - Sarah</blockquote>
+        <blockquote>"I love how simple and effective this app is!" - John</blockquote>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feel free to reach out:</p>
+        <p>Email: support@loantracker.com</p>
+        <p>Phone: (123) 456-7890</p>
+    </section>
+
+    <!-- Social Media Links -->
+    <div class="social-links">
+        <a href="https://github.com/kunalsir98" target="_blank">
+            <img src="https://img.icons8.com/ios-filled/50/000000/github.png" alt="GitHub">
+        </a>
+        <a href="https://www.linkedin.com/in/kunal-chopde-812720267/" target="_blank">
+            <img src="https://img.icons8.com/ios-filled/50/000000/linkedin.png" alt="LinkedIn">
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 Loan Tracker. All rights reserved.</p>
+    </div>
+
+    <script>
+        // Smooth scroll effect
+        document.addEventListener('scroll', function () {
+            const sections = document.querySelectorAll('section');
+            const scrollPosition = window.scrollY + window.innerHeight;
+            sections.forEach(section => {
+                if (scrollPosition > section.offsetTop + section.offsetHeight / 4) {
+                    section.classList.add('visible');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

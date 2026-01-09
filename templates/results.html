@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan Approval Prediction</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f9f9f9; /* Light background */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 500px;
+            width: 100%;
+            background-color: #fff; /* White background for container */
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Light shadow */
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #4CAF50; /* Green color */
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #555; /* Darker gray color for text */
+            margin-bottom: 20px;
+        }
+
+        .cta {
+            display: flex;
+            justify-content: center;
+        }
+
+        .cta a {
+            background-color: #4CAF50; /* Green color */
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .cta a:hover {
+            background-color: #45a049; /* Slightly darker green on hover */
+            transform: scale(1.05);
+        }
+
+        .cta a:focus {
+            outline: 2px solid #4CAF50;
+            outline-offset: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>{{ final_result }}</h1>
+        <p>Your prediction result is ready!</p>
+        <div class="cta">
+            <a href="/">Go Back</a>
+        </div>
+    </div>
+
+</body>
+
+</html>

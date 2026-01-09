@@ -1,0 +1,8 @@
+scikit-learn
+pandas 
+numpy 
+seaborn 
+flask
+gunicorn==22.0.0
+mysql
+#-e .
