@@ -1,5 +1,8 @@
 from flask import Flask, request, render_template
+from dotenv import load_dotenv
 import os
+
+load_dotenv()
 from src.pipeline.prediction_pipeline import CustomData, PredictPipeline
 import mysql.connector
 from mysql.connector import Error
