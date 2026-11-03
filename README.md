@@ -1,56 +1,125 @@
-Loan Approval Application
-Overview
-The Loan Approval Application is a web-based tool that predicts loan approval status based on various financial factors provided by the user. This tool allows users to get quick insights into their loan eligibility and approval status, helping them make informed decisions when applying for loans.
+# Loan Approval Prediction
 
-Features
-Instant Loan Prediction: Get instant predictions on loan approval status.
-User-Friendly Interface: Simple and intuitive UI for easy data entry.
-Data Privacy: All personal and financial data entered by the user is handled securely.
-Predict Loan Approval: The application uses machine learning to predict whether a loan application will be approved or denied based on user input.
-Technologies Used
-HTML: Used for creating the structure of the web pages.
-CSS: For styling the application and making it visually appealing.
-Flask: A micro web framework for building the web application.
-JavaScript: Used for handling user interaction and smooth scroll effect.
-Python: Backend code for handling prediction logic (model and data processing).
-Machine Learning: The loan approval prediction is powered by a machine learning model (trained using historical loan data).
-Installation
-Follow these steps to set up the project locally:
+A machine-learning project that predicts a loan application's approval outcome from applicant and financial attributes. It includes a data-preparation and model-training pipeline, a Flask web interface, and an optional MySQL application-recording step.
 
-1. Clone the repository
-bash
-Copy code
-git clone https://github.com/yourusername/loan-approval-app.git
-cd loan-approval-app
-2. Install dependencies
-You need Python 3 and pip installed on your machine. After cloning the repository, install the necessary dependencies:
+> **Important:** This is an educational prediction project, not a financial service. Its output is a model estimate and must not be used as the sole basis for real lending decisions.
 
-bash
-Copy code
+## Features
+
+- Collects applicant details such as income, loan amount, loan term, CIBIL score, assets, education, employment status, and number of dependents.
+- Preprocesses numerical and categorical features.
+- Trains a CatBoost classification model.
+- Loads the saved preprocessing object and model to generate predictions.
+- Provides a Flask interface for submitting applicant information and viewing the predicted result.
+- Includes a MySQL integration for storing submitted application details when a database is configured.
+
+## Tech Stack
+
+- **Python**
+- **Flask** – web application.
+- **Pandas and NumPy** – data handling.
+- **Scikit-learn** – preprocessing, train/test split, and evaluation utilities.
+- **CatBoost** – classification model.
+- **MySQL Connector/Python** – optional application-record storage.
+- **HTML, CSS, JavaScript** – web interface.
+
+## Project Structure
+
+```text
+loan-approval-prediction/
+├── artifacts/                  # Saved model, preprocessor, and generated datasets
+├── notebook/
+│   ├── loan_approval.csv       # Dataset used by the training pipeline
+│   ├── data.csv                # Additional dataset file
+│   ├── eda.ipynb               # Exploratory analysis
+│   └── model.ipynb             # Model experimentation
+├── src/
+│   ├── components/             # Ingestion, transformation, and model training
+│   ├── pipeline/               # Training and prediction pipelines
+│   ├── exception.py            # Custom exception handling
+│   ├── logger.py               # Application logging
+│   └── utils.py                # Model persistence and evaluation helpers
+├── static/                     # CSS and JavaScript assets
+├── templates/                  # Flask HTML templates
+├── app.py                      # Flask application
+├── loan.py                     # MySQL table setup script
+├── requirements.txt
+└── README.md
+```
+
+## Setup
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/IslamBilal/loan-approval-prediction.git
+cd loan-approval-prediction
+```
+
+### 2. Create and activate a virtual environment
+
+Windows:
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+macOS/Linux:
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+```
+
+### 3. Install dependencies
+
+```bash
 pip install -r requirements.txt
-3. Run the application
-To start the application, run the following command in your terminal:
+```
 
-bash
-Copy code
+The project also requires CatBoost and MySQL Connector/Python for the model-training and optional database features. Ensure these packages are installed if they are not yet listed in the dependency file.
+
+## Train the Model
+
+Run the training pipeline from the repository root:
+
+```bash
+python -m src.pipeline.training_pipeline
+```
+
+The pipeline reads `notebook/loan_approval.csv`, creates training and test data under `artifacts/`, fits the preprocessing pipeline, trains the classifier, and saves the generated model artifacts.
+
+The Flask prediction route expects the saved files:
+
+- `artifacts/preprocessor.pkl`
+- `artifacts/model.pkl`
+
+Use artifacts generated by the training code in the same project environment.
+
+## Run the Web App
+
+```bash
 python app.py
-This will start the Flask server locally. Open your browser and go to http://127.0.0.1:5000/ to view the application.
+```
 
-Folder Structure
-bash
-Copy code
-loan-approval-app/
-│
-├── static/                # Contains CSS, images, and other static assets
-├── templates/              # HTML templates for rendering the web pages
-│   ├── base.html           # Base template with common layout
-│   ├── index.html          # Homepage with introduction and loan prediction form
-│   ├── result.html         # Results page to display loan prediction
-│
-├── app.py                  # Main Python file to run the Flask application
-├── requirements.txt        # List of dependencies for the project
-└── README.md               # Project documentation (this file)
-How It Works
-User Input: The user is prompted to provide financial details such as income, loan amount, payment history, etc.
-Prediction: Once the user submits the form, the data is sent to the Flask backend, where a pre-trained machine learning model processes the input and makes a prediction.
-Result: The prediction result is displayed to the user, informing them whether their loan application is approved or denied.
+Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
+
+## Database Configuration
+
+The application contains an optional MySQL persistence step. Before using it, configure a MySQL server and database named `loan_approval`, create the `loan_applications1` table using the provided setup script, and configure database credentials securely. Do not commit real passwords or personal data to GitHub.
+
+If MySQL is not configured, prediction and database-storage behavior may differ; check the application output and database connection settings.
+
+## Notes and Limitations
+
+- Model quality depends on the dataset, feature processing, and validation results. No accuracy figure is claimed here because a verified evaluation result is not documented in the repository.
+- The current web application runs in Flask development mode. Use a production WSGI server and disable debug mode before deployment.
+- Treat saved pickle files as trusted project artifacts only; loading pickle files from untrusted sources can execute code.
+- Validate form inputs and review database configuration before exposing the application publicly.
+
+## Future Improvements
+
+- Add reproducible model evaluation with precision, recall, F1-score, and a confusion matrix.
+- Add input validation and clear user-facing error messages.
+- Move database credentials to environment variables.
+- Add automated tests for preprocessing, prediction, and database operations.
+- Deploy the app with production configuration and documented hosting steps.
