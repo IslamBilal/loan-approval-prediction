@@ -24,7 +24,7 @@ class DataIngestion:
             logging.info('data frame read as pandas dataframe')
             os.makedirs(os.path.dirname(self.ingestion_config.raw_data_path),exist_ok=True)
             df.to_csv(self.ingestion_config.raw_data_path,index=False)
-            train_set,test_set=train_test_split(df,test_size=0.30)
+            train_set,test_set=train_test_split(df, test_size=0.30, random_state=42, stratify=df['loan_status'])
             logging.info('initiated train test split')
 
             train_set.to_csv(self.ingestion_config.train_data_path,index=False,header=True)
