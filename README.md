@@ -105,7 +105,7 @@ Open [http://127.0.0.1:5000](http://127.0.0.1:5000) in your browser.
 
 ## Database Configuration
 
-The application contains an optional MySQL persistence step. Before using it, configure a MySQL server and database named `loan_approval`, create the `loan_applications1` table using the provided setup script, and configure database credentials securely. Do not commit real passwords or personal data to GitHub.
+The application contains an optional MySQL persistence step. Before using it, configure a MySQL server and database named `loan_approval`, then copy `.env.example` to `.env` and set `MYSQL_HOST`, `MYSQL_PORT`, `MYSQL_USER`, `MYSQL_PASSWORD`, and `MYSQL_DATABASE`. Run `python loan.py` to create the `loan_applications1` table. The `.env` file is ignored by Git; never commit real passwords or personal data.
 
 If MySQL is not configured, prediction and database-storage behavior may differ; check the application output and database connection settings.
 
