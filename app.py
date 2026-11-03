@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template
+import os
 from src.pipeline.prediction_pipeline import CustomData, PredictPipeline
 import mysql.connector
 from mysql.connector import Error
@@ -12,10 +13,11 @@ def create_connection():
     connection = None
     try:
         connection = mysql.connector.connect(
-            host="localhost",
-            user="",   # Replace with your MySQL username
-            password="",  # Replace with your MySQL password
-            database="loan_approval"  # The database you created
+            host=os.getenv("MYSQL_HOST", "localhost"),
+            port=int(os.getenv("MYSQL_PORT", "3306")),
+            user=os.getenv("MYSQL_USER", ""),
+            password=os.getenv("MYSQL_PASSWORD", ""),
+            database=os.getenv("MYSQL_DATABASE", "loan_approval")
         )
         print("Connection to MySQL DB successful")
     except Error as e:
@@ -56,7 +58,8 @@ def predict_datapoint():
         pred = predict_pipeline.predict(final_new_data)
         
         # Map prediction result to human-readable format
-        if pred[0] == 1:
+        # LabelEncoder maps " Approved" to 0 and " Rejected" to 1 in the current dataset.
+        if int(pred[0]) == 0:
             result_label = "Approved"
         else:
             result_label = "Rejected"
@@ -85,4 +88,4 @@ def predict_datapoint():
         return render_template('results.html', final_result=result_label)
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', debug=True)
+    app.run(host='127.0.0.1', port=int(os.getenv('PORT', '5000')), debug=False)
