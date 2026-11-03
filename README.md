@@ -76,7 +76,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-The project also requires CatBoost and MySQL Connector/Python for the model-training and optional database features. Ensure these packages are installed if they are not yet listed in the dependency file.
+The dependency file includes CatBoost for model training and MySQL Connector/Python for the optional application-recording feature.
 
 ## Train the Model
 
